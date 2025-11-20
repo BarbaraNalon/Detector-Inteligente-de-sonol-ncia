@@ -1,22 +1,33 @@
-Protocolo I²C (Interface):
+ Descrição Detalhada do Hardware Utilizado
+O projeto de Detector Inteligente de Sonolência foi concebido e prototipado utilizando a arquitetura de microcontrolador ESP32 em um ambiente de simulação, com componentes selecionados para um desempenho ideal na fase de prova de conceito.
 
-Utilizado para a comunicação entre o ESP32 e o Display OLED.
+Plataforma de Desenvolvimento
+A plataforma central do projeto é a Placa de Desenvolvimento ESP32 DevKit V1. Esta placa foi escolhida devido à sua alta capacidade de processamento (Dual-Core rodando a até 240 MHz) e, crucialmente, pelo seu Conversor Analógico-Digital (ADC) de 12 bits. A resolução de 12 bits é fundamental, pois permite uma faixa de leitura de 0 a 4095, garantindo maior precisão e granularidade na aquisição de dados analógicos dos sensores biométricos (GSR e PPG). As conexões foram realizadas em uma Mini Protoboard para facilitar a prototipagem das interfaces.
 
-Pinos: SDA (GPIO 25) e SCL (GPIO 26).
+Sensores (Entradas de Dados)
+Os sensores são o foco da aquisição de dados, responsáveis por fornecer as métricas fisiológicas que alimentam a lógica de detecção de sonolência:
 
-Protocolo Analógico (Sensores):
+Sensor Primário (Nível de Estresse): Representado pelo Sensor GSR (Condutância da Pele). Este é o sensor mais importante para a lógica otimizada, sendo a sua leitura analógica (conectada ao GPIO 35 - ADC1_CH7) o gatilho principal que o código utiliza para simular a variação do ritmo cardíaco. O GSR mede a condutividade elétrica da pele, que diminui drasticamente em estados de relaxamento profundo ou sonolência.
 
-Utilizado para a leitura dos dados dos sensores GSR e Gerador de Pulso.
+Sensor Secundário (Pulso): Representado pelo módulo Pulse Generator Breakout (Simulador PPG). Embora conectado ao GPIO 34 (ADC1_CH6), a sua leitura é deliberadamente ignorada pelo código otimizado. Ele está presente no diagrama para fins estruturais, mas a variação real do Batimento Cardíaco (BPM) e do PRV é determinada internamente pelo código, em função da leitura do GSR.
 
-Pinos: GPIO 34 e GPIO 35 (Entradas ADC do ESP32).
+Atuadores e Interface
+Os atuadores são responsáveis pela comunicação do resultado da análise do sistema:
 
-Comunicação Serial (Módulo de Debug):
+Atuador Visual (Display): Um Display OLED 0.96" (baseado no chip SSD1306) é utilizado como interface principal. Ele se comunica com o ESP32 através do Protocolo I²C, utilizando os pinos SDA (GPIO 25) e SCL (GPIO 26). O display exibe as métricas essenciais em tempo real: BPM, PRV e Nível de Estresse.
 
-A porta Serial é usada para debug (Serial.begin(115200)) e exibição das métricas no Monitor Serial do computador.
+Atuador Sonoro (Alerta): Um Buzzer Ativo é conectado ao GPIO 4. Ele é ativado digitalmente pelo sistema para emitir um tom de alerta sonoro de alta frequência no momento em que a condição de sonolência for detectada pela lógica de convergência de fatores.
 
-Tipo,Componente,Descrição/Plataforma
-Plataforma de Desenv.,ESP32 DevKit V1,"Microcontrolador principal (12 bits ADC, Wi-Fi/BT)"
-Sensor (GSR),Sensor de Condutância da Pele,Entrada real de Nível de Estresse (conectado ao GPIO 35).
-Sensor (Simulado PPG),Gerador de Pulso Breakout,"Utilizado na simulação para fornecer a entrada de sinal, conectado ao GPIO 34."
-Atuador (Visual),Display OLED I²C (SSD1306),"Exibe as métricas de saída (BPM, PRV, Stress)."
-Atuador (Sonoro),Buzzer Ativo,Dispara o alarme sonoro de sonolência (conectado ao GPIO 4).
+Interfaces e Protocolos de Comunicação
+O sistema utiliza protocolos padronizados para garantir a comunicação entre os módulos:
+
+I²C: Utilizado para a comunicação com o Display OLED (SDA/SCL).
+
+ADC: Protocolo Analógico para a leitura dos dados do GSR (GPIO 35) e do Pulse Generator (GPIO 34).
+
+Digital: Saída Digital para o controle do Buzzer (GPIO 4).
+
+Serial: A porta Serial é usada para debug e monitoramento das métricas no Monitor Serial, crucial durante a fase de desenvolvimento e calibração.
+
+Considerações sobre Medidas e Peças Físicas
+O projeto encontra-se na fase de prova de conceito em ambiente de simulação. Portanto, não foram utilizadas peças impressas em 3D nem foram definidas medidas finais de caixas ou gabinetes. Estes elementos seriam necessários em uma fase posterior de encapsulamento veicular. Para fins de estimativa futura, um invólucro compacto para uso automotivo provavelmente exigiria dimensões aproximadas de 80 mm x 50 mm x 30 mm, visando a portabilidade e a montagem discreta no painel ou volante.
