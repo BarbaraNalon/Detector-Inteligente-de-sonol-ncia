@@ -1,0 +1,22 @@
+Protocolo I²C (Interface):
+
+Utilizado para a comunicação entre o ESP32 e o Display OLED.
+
+Pinos: SDA (GPIO 25) e SCL (GPIO 26).
+
+Protocolo Analógico (Sensores):
+
+Utilizado para a leitura dos dados dos sensores GSR e Gerador de Pulso.
+
+Pinos: GPIO 34 e GPIO 35 (Entradas ADC do ESP32).
+
+Comunicação Serial (Módulo de Debug):
+
+A porta Serial é usada para debug (Serial.begin(115200)) e exibição das métricas no Monitor Serial do computador.
+
+Tipo,Componente,Descrição/Plataforma
+Plataforma de Desenv.,ESP32 DevKit V1,"Microcontrolador principal (12 bits ADC, Wi-Fi/BT)"
+Sensor (GSR),Sensor de Condutância da Pele,Entrada real de Nível de Estresse (conectado ao GPIO 35).
+Sensor (Simulado PPG),Gerador de Pulso Breakout,"Utilizado na simulação para fornecer a entrada de sinal, conectado ao GPIO 34."
+Atuador (Visual),Display OLED I²C (SSD1306),"Exibe as métricas de saída (BPM, PRV, Stress)."
+Atuador (Sonoro),Buzzer Ativo,Dispara o alarme sonoro de sonolência (conectado ao GPIO 4).
