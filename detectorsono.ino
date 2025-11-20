@@ -9,31 +9,31 @@
 #define SCREEN_HEIGHT 64
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1); 
 
-// --- PINOS 
+// --- PINOS CORRIGIDOS ---
 #define OLED_SDA 25 
 #define OLED_SCL 26 
 
 #define PULSE_PIN 34  // Sensor de Pulso (BPM)
-#define GSR_PIN 35    // Potenciômetro para simular Estresse/GSR
+#define GSR_PIN 35    // NOVO: Potenciômetro para simular Estresse/GSR
 #define BUZZER_PIN 4 
 
 // VARIÁVEIS DE CONTROLE
 int batimentos = 0;
-int nivelEstresse = 0; 
+int nivelEstresse = 0; // Novo
 unsigned long ultimoEnvio = 0;
 
-// CONFIGURAÇÃO WIFI e MQTT 
+// CONFIGURAÇÃO WIFI e MQTT (Mantidas)
 const char* ssid = "Wokwi-GUEST";
 const char* password = "";
 const char* mqtt_server = "c9ed373e90b2485297838c11e6fad383.s1.eu.hivemq.cloud"; 
 const int   mqtt_port   = 8883; 
 const char* mqtt_user = "babi00";
-const char* mqtt_pass = "Babi0022@"; // SENHA AQUI
+const char* mqtt_pass = "Babi0022@"; // <<< INSIRA SUA SENHA AQUI!!!
 
 WiFiClientSecure espClient; 
 PubSubClient client(espClient);
 
-// Funções conectarWiFi e reconnect 
+// Funções conectarWiFi e reconnect (Mantidas)
 void conectarWiFi() {
   Serial.print("Conectando ao WiFi: ");
   Serial.println(ssid);
@@ -66,7 +66,10 @@ void reconnect() {
     }
   }
 }
+
+// -----------------------------------
 // SETUP
+// -----------------------------------
 void setup() {
   Serial.begin(115200);
   pinMode(BUZZER_PIN, OUTPUT);
@@ -89,7 +92,9 @@ void setup() {
   delay(1000);
 }
 
-// LOOP PRINCIPAL 
+// -----------------------------------
+// LOOP PRINCIPAL (LÓGICA AVANÇADA DE DECISÃO)
+// -----------------------------------
 void loop() {
 
   if (!client.connected()) {
@@ -97,7 +102,7 @@ void loop() {
   }
   client.loop();
 
-  // LEITURAS E CONVERSÕES
+  // --- LEITURAS E CONVERSÕES ---
   int leituraRawPulse = analogRead(PULSE_PIN);
   int leituraRawGSR = analogRead(GSR_PIN);
 
@@ -107,7 +112,7 @@ void loop() {
   // Converte GSR para Nível de Estresse (0-100)
   nivelEstresse = map(leituraRawGSR, 0, 4095, 0, 100); 
 
-  // DEFINIÇÃO DOS GATILHOS (CRITÉRIO DE DECISÃO CIENTÍFICO)
+  // --- DEFINIÇÃO DOS GATILHOS (CRITÉRIO DE DECISÃO CIENTÍFICO) ---
   // Gatilho de Fadiga: Coração lento (BPM < 65) E Mente relaxada (GSR < 50)
   bool alertaSono = (batimentos <= 65) && (nivelEstresse <= 50); 
   
@@ -119,8 +124,9 @@ void loop() {
   display.setTextColor(WHITE);
   display.setCursor(0, 0);
 
+  // ----------------------------------------------------
   // LÓGICA DO DISPLAY E BUZZER
-
+  // ----------------------------------------------------
   if (alertaSono) {
     // MODO ALERTA DE FADIGA/SONO
     tone(BUZZER_PIN, 1000); 
@@ -160,8 +166,9 @@ void loop() {
   display.display();
 
 
+  // ----------------------------------------------------
   // ENVIO MQTT (Atualizado para 3 critérios de status)
-  
+  // ----------------------------------------------------
   if (millis() - ultimoEnvio > 3000) {
     ultimoEnvio = millis();
 
