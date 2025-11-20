@@ -25,10 +25,10 @@ unsigned long ultimoEnvio = 0;
 // CONFIGURAÇÃO WIFI e MQTT (Mantidas)
 const char* ssid = "Wokwi-GUEST";
 const char* password = "";
-const char* mqtt_server = "c9ed373e90b2485297838c11e6fad383.s1.eu.hivemq.cloud"; 
+const char* mqtt_server = "XXXXXXXXXXXXXXXXXXXXXXXXX.eu.hivemq.cloud"; 
 const int   mqtt_port   = 8883; 
-const char* mqtt_user = "babi00";
-const char* mqtt_pass = "Babi0022@"; // <<< INSIRA SUA SENHA AQUI!!!
+const char* mqtt_user = "babiXXXX";
+const char* mqtt_pass = "BabiXXXX"; // SUA SENHA AQUI!!!
 
 WiFiClientSecure espClient; 
 PubSubClient client(espClient);
