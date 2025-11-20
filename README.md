@@ -1,8 +1,13 @@
-# Detector-Inteligente-de-sonol-ncia
-Este projeto é um sistema de segurança ativo desenvolvido para monitorar sinais fisiológicos e detectar precocemente o risco de sonolência do motorista, emitindo um alerta sonoro e visual antes que a fadiga cause acidentes.
-O principal diferencial deste projeto é a otimização do código (firmware), que substitui a lógica simples de projetos base por uma análise de sinais mais robusta e realista, mesmo em um ambiente de simulação.
+ 😴 Detector Inteligente de Sonolência (ESP32)
 
-Aprimoramentos do Projeto (Código Otimizado)O código foi reestruturado para superar as limitações de simulação e alcançar uma análise mais próxima da realidade biométrica:Análise Fisiológica Inteligente (PRV): Implementação do cálculo do PRV (Variabilidade da Frequência Cardíaca), uma métrica superior ao BPM simples para detectar o relaxamento profundo e a monotonia, que são precursores da sonolência.Arquitetura Assíncrona: Separação das tarefas em timers para evitar o uso de delay(), garantindo que o sistema permaneça responsivo.Simulação Controlada pelo Stress (GSR): O sistema resolve o problema do sensor de pulso (PPG) fixo na simulação ao ignorar sua leitura constante. Em vez disso, a queda no BPM é simulada e ativada pela queda no nível de Estresse (GSR), criando uma relação fisiológica realista: Estresse Baixo → Coração Mais Lento → Alerta de Sonolência.Lógica de Detecção Robusta: O alarme só é acionado se houver uma convergência de fatores (Ex: Stress baixo E BPM baixo E PRV baixo), reduzindo drasticamente os falsos positivos.
+Descrição do Funcionamento: Explique o problema (fadiga ao volante) e como o sistema o resolve (monitorando sinais vitais para prever o risco). Destaque a simulação inteligente:
 
-⚙️ Componentes Utilizados
-ComponenteFunçãoMicrocontroladorESP32Entrada 1 (Simulação de Pulso)Gerador de Pulso BreakoutEntrada 2 (Nível de Estresse)Sensor GSR (Simulado)Saída VisualDisplay OLED (I²C)Saída SonoraBuzzer🛠️ Instalação e UsoClone este repositório: git clone [SEU_LINK_DO_REPOSITORIO]Abra o arquivo .ino na IDE do Arduino.Certifique-se de ter as bibliotecas instaladas: Adafruit_GFX e Adafruit_SSD1306.Faça o upload do código para o seu ESP32 ou configure o circuito em seu simulador.Teste de Alerta: Mantenha o slider do Sensor GSR baixo (abaixo do limiar de 50) para simular o relaxamento profundo e acionar o alerta.
+"Este sistema previne acidentes monitorando sinais fisiológicos. O diferencial do código é a Simulação Controlada pelo Estresse (GSR): o sistema correlaciona a queda no Nível de Estresse (GSR) com a desaceleração do Batimento Cardíaco (BPM) para disparar o alerta, tornando a detecção robusta contra alarmes falsos."
+
+Instruções de Uso para Reprodução:
+
+Como instalar as bibliotecas (Adafruit_GFX, Adafruit_SSD1306).
+
+Como fazer o upload para o ESP32.
+
+Instrução de Teste Chave: "Para testar a lógica de sonolência, manipule o slider do sensor GSR para simular um relaxamento profundo. O sistema reagirá com a queda do BPM e acionará o alerta no display e buzzer."
