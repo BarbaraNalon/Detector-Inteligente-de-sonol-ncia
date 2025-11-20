@@ -12,4 +12,4 @@ Como fazer o upload para o ESP32.
 
 Instrução de Teste Chave: "Para testar a lógica de sonolência, manipule o slider do sensor GSR para simular um relaxamento profundo. O sistema reagirá com a queda do BPM e acionará o alerta no display e buzzer."
 <img width="1875" height="786" alt="image" src="https://github.com/user-attachments/assets/ef74794c-b554-45c4-9f76-46cdf2922b29" />
-<img width="1024" height="1536" alt="Fluxo" src="https://github.com/user-attachments/assets/23a871c9-3e74-402b-aa88-5d847c9d8430" />
+
