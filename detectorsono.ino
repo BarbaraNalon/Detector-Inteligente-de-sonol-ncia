@@ -19,7 +19,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 // VARIÁVEIS DE CONTROLE
 int batimentos = 0;
-int nivelEstresse = 0; // Novo
+int nivelEstresse = 0; 
 unsigned long ultimoEnvio = 0;
 
 // CONFIGURAÇÃO WIFI e MQTT 
